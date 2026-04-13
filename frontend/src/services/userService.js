@@ -1,24 +1,17 @@
-import axios from 'axios';
-
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
-
-const getHeaders = () => {
-  const token = localStorage.getItem('token');
-  return { headers: { Authorization: `Bearer ${token}` } };
-};
+import api from './api';
 
 export const getProfile = async () => {
-  return await axios.get(`${API_URL}/users/me`, getHeaders());
+  return await api.get('/users/me');
 };
 
 export const updateProfile = async (data) => {
-  return await axios.patch(`${API_URL}/users/profile`, data, getHeaders());
+  return await api.patch('/users/profile', data);
 };
 
 export const setup2FA = async () => {
-  return await axios.post(`${API_URL}/users/2fa/setup`, {}, getHeaders());
+  return await api.post('/users/2fa/setup', {});
 };
 
 export const verify2FA = async (otp) => {
-  return await axios.post(`${API_URL}/users/2fa/verify`, { otp }, getHeaders());
+  return await api.post('/users/2fa/verify', { otp });
 };
