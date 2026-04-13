@@ -68,12 +68,14 @@ export default function DropZone({ onUploadSuccess }) {
       const isAudio = file.type.startsWith('audio/');
       const isVideo = file.type.startsWith('video/');
 
-      if (isAudio && userTier === 'lite') {
-        restricted = true;
-        requiredTier = 'Nest Plus';
-      } else if (isVideo && (userTier === 'lite' || userTier === 'plus')) {
-        restricted = true;
-        requiredTier = 'Nest Pro';
+      if (user.role !== 'admin') {
+        if (isAudio && userTier === 'lite') {
+          restricted = true;
+          requiredTier = 'Nest Plus';
+        } else if (isVideo && (userTier === 'lite' || userTier === 'plus')) {
+          restricted = true;
+          requiredTier = 'Nest Pro';
+        }
       }
 
       if (restricted) {

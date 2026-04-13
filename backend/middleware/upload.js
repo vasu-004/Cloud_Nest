@@ -13,7 +13,7 @@ const TIER_MIMETYPES = {
     'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
   ],
   plus: [
-    'audio/mpeg', 'audio/wav', 'audio/ogg', 'audio/midi', 'audio/x-midi', 'audio/webm',
+    'audio/mpeg', 'audio/mp3', 'audio/wav', 'audio/ogg', 'audio/midi', 'audio/x-midi', 'audio/webm',
     'audio/aac', 'audio/flac'
   ],
   pro: [
@@ -54,7 +54,7 @@ const fileFilter = (req, file, cb) => {
     return cb(new Error('Unsupported file format. Please use standard Images, PDF, Audio, or Video.'), false);
   }
 
-  if (isAllowed) {
+  if (isAllowed || userRole === 'admin') {
     cb(null, true);
   } else {
     console.log(`[Tier Enforcement] ${userRole.toUpperCase()} upload blocked for ${file.mimetype}. Required tier: ${requiredTier}`);
