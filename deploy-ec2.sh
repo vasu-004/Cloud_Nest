@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# CloudNest EC2 Deployment Script (Ubuntu 22.04 LTS)
-# This script installs Node.js, MongoDB, Nginx, PM2 and deploys the CloudNest app.
+# Cloud_Nest EC2 Deployment Script (Ubuntu 22.04 LTS)
+# This script installs Node.js, MongoDB, Nginx, PM2 and deploys the Cloud_Nest app.
 
 set -e
 
-echo "🚀 Starting CloudNest Deployment..."
+echo "🚀 Starting Cloud_Nest Deployment..."
 
 # 1. Update System
 echo "🔄 Updating system packages..."
@@ -32,10 +32,10 @@ sudo npm install -g pm2
 
 # 5. Prepare Web Directory
 echo "📂 Preparing app directory..."
-sudo mkdir -p /opt/cloudnest
-sudo chown -R $USER:$USER /opt/cloudnest
-cp -r . /opt/cloudnest/
-cd /opt/cloudnest
+sudo mkdir -p /opt/Cloud_Nest
+sudo chown -R $USER:$USER /opt/Cloud_Nest
+cp -r . /opt/Cloud_Nest/
+cd /opt/Cloud_Nest
 
 
 # 6. Fetch Public IP
@@ -76,14 +76,14 @@ cd ..
 echo "🛡️ Configuring Nginx..."
 sudo apt install -y nginx
 
-cat <<EOF | sudo tee /etc/nginx/sites-available/cloudnest
+cat <<EOF | sudo tee /etc/nginx/sites-available/Cloud_Nest
 server {
     listen 80;
     server_name $PUBLIC_IP;
 
     # Frontend Static Files
     location / {
-        root /opt/cloudnest/frontend/dist;
+        root /opt/Cloud_Nest/frontend/dist;
         index index.html;
         try_files \$uri \$uri/ /index.html;
     }
@@ -103,7 +103,7 @@ server {
 }
 EOF
 
-sudo ln -sf /etc/nginx/sites-available/cloudnest /etc/nginx/sites-enabled/
+sudo ln -sf /etc/nginx/sites-available/Cloud_Nest /etc/nginx/sites-enabled/
 sudo rm -f /etc/nginx/sites-enabled/default
 sudo nginx -t
 sudo systemctl restart nginx
@@ -117,5 +117,5 @@ sudo ufw --force enable
 echo "✅ Deployment Complete!"
 echo "📍 Access your app at: http://$PUBLIC_IP"
 echo "🔍 Check backend status: pm2 status"
-echo "📂 App Location: /opt/cloudnest"
+echo "📂 App Location: /opt/Cloud_Nest"
 
