@@ -45,7 +45,7 @@ export default function Sidebar() {
   return (
     <aside className="sidebar">
       <div className="sidebar-logo">
-        <div style={{
+        <div className="nest-icon" style={{
           position: 'relative',
           width: '32px',
           height: '32px',
