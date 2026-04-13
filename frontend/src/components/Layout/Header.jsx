@@ -1,9 +1,11 @@
 // src/components/Layout/Header.jsx
-import { Search, RefreshCw } from 'lucide-react';
+import { Search, RefreshCw, Sun, Moon } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { useTheme } from '../../context/ThemeContext';
 
 export default function Header({ title }) {
   const { user } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   
   // Get initials for avatar
   const initials = user?.name
@@ -21,6 +23,14 @@ export default function Header({ title }) {
         </div>
         
         <div className="header-actions">
+          <button 
+            className="icon-btn theme-toggle" 
+            onClick={toggleTheme}
+            title={`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`}
+          >
+            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+          </button>
+
           <button className="icon-btn">
             <RefreshCw size={16} />
           </button>
