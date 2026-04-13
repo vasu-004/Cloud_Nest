@@ -79,7 +79,8 @@ export default function LoginPage() {
       toast.success(`Welcome back, ${user.name}! 👋`);
       navigate('/');
     } catch (err) {
-      toast.error(err.response?.data?.message || 'Login failed. Try again.');
+      const errorMsg = err.response?.data?.message || err.message || 'Login failed. Try again.';
+      toast.error(errorMsg);
     } finally {
       setLoading(false);
     }

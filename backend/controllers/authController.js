@@ -108,9 +108,11 @@ const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    const cleanEmail = email ? email.trim().toLowerCase() : '';
     // Find user and explicitly select password (excluded by default)
-    const user = await User.findOne({ email }).select('+password');
+    const user = await User.findOne({ email: cleanEmail }).select('+password');
     if (!user) {
+      console.log(`[AUTH-DEBUG] Login failed: User not found for email '${cleanEmail}'`);
       return res.status(401).json({
         success: false,
         message: 'Invalid email or password.',
@@ -120,6 +122,7 @@ const login = async (req, res) => {
     // Use the model method to compare hashed passwords
     const isMatch = await user.comparePassword(password);
     if (!isMatch) {
+      console.log(`[AUTH-DEBUG] Login failed: Invalid password for email '${cleanEmail}'`);
       return res.status(401).json({
         success: false,
         message: 'Invalid email or password.',
