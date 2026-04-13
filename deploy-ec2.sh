@@ -32,10 +32,17 @@ sudo npm install -g pm2
 
 # 5. Prepare Web Directory
 echo "📂 Preparing app directory..."
-sudo mkdir -p /opt/Cloud_Nest
-sudo chown -R $USER:$USER /opt/Cloud_Nest
-cp -r . /opt/Cloud_Nest/
-cd /opt/Cloud_Nest
+TARGET_DIR="/opt/Cloud_Nest"
+sudo mkdir -p "$TARGET_DIR"
+sudo chown -R $USER:$USER "$TARGET_DIR"
+
+# Only copy if we are not already in the target directory
+if [ "$(readlink -f .)" != "$(readlink -f $TARGET_DIR)" ]; then
+    echo "🚚 Copying files to $TARGET_DIR..."
+    cp -r . "$TARGET_DIR/"
+fi
+
+cd "$TARGET_DIR"
 
 
 # 6. Fetch Public IP
