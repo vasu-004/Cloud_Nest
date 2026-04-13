@@ -54,6 +54,9 @@ echo "📦 Setting up Backend..."
 cd backend
 npm install
 
+# Create .env from template
+cp .env.example .env
+
 # Update .env for local MongoDB and current IP
 sed -i "s|MONGO_URI=.*|MONGO_URI=mongodb://localhost:27017/clouduploader|g" .env
 sed -i "s|CLIENT_URL=.*|CLIENT_URL=http://$PUBLIC_IP|g" .env
@@ -74,6 +77,9 @@ cd ..
 echo "📦 Setting up Frontend..."
 cd frontend
 npm install
+
+# Create .env from template (optional but useful)
+cp .env.example .env || true
 
 # Build with Production URL
 VITE_API_URL="http://$PUBLIC_IP/api" npm run build
